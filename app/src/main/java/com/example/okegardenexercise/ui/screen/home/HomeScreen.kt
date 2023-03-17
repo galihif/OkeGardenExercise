@@ -7,14 +7,18 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.okegardenexercise.ui.components.CityNameDropdown
+import com.example.okegardenexercise.ui.screen.home.HomeViewModel
 
 @ExperimentalMaterialApi
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
-    onSubmitClicked: () -> Unit
+    onSubmitClicked: () -> Unit,
+    viewModel:HomeViewModel = hiltViewModel()
 ) {
+    val test by viewModel.test.collectAsState()
     val apiKey by remember {
         mutableStateOf("ff9f895b2e884d6680530135202710")
     }
@@ -48,7 +52,7 @@ fun HomeScreen(
                     .padding(top = 16.dp), onClick = onSubmitClicked
             ) {
                 Text(
-                    text = "Submit",
+                    text = test,
                     modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)
                 )
             }

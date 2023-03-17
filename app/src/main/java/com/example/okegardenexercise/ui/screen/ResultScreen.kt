@@ -12,12 +12,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.okegardenexercise.data.model.Weather
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ResultScreen() {
-    var celcius by remember { mutableStateOf("") }
-    var fahrenheit by remember { mutableStateOf("") }
+fun ResultScreen(
+    weather: Weather
+) {
+    var celcius by remember { mutableStateOf(weather.tempCelcius) }
+    var fahrenheit by remember { mutableStateOf(weather.tempFahrenheit) }
     Scaffold {
         Column(
             modifier = Modifier
@@ -26,8 +29,8 @@ fun ResultScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            OutlinedTextField(value = celcius, onValueChange = { celcius = it }, label = { Text(text = "Celcius") })
-            OutlinedTextField(value = fahrenheit, onValueChange = { fahrenheit = it}, label = { Text(text = "Fahrenheit") })
+            OutlinedTextField(value = "$celcius", onValueChange = {  }, label = { Text(text = "Celcius") })
+            OutlinedTextField(value = "$fahrenheit", onValueChange = { }, label = { Text(text = "Fahrenheit") })
         }
     }
 }

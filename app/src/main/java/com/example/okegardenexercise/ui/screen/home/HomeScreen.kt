@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.okegardenexercise.data.model.Weather
 import com.example.okegardenexercise.ui.components.CityNameDropdown
 import com.example.okegardenexercise.ui.screen.home.HomeViewModel
 
@@ -17,7 +18,7 @@ import com.example.okegardenexercise.ui.screen.home.HomeViewModel
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
-    onSubmitClicked: () -> Unit,
+    onResult:(Weather) -> Unit,
     viewModel:HomeViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -33,9 +34,12 @@ fun HomeScreen(
     }
 
     val loading by viewModel.loading.collectAsState()
+    val success by viewModel.success.collectAsState()
 
     LaunchedEffect(tempC){
-        Toast.makeText(context, "$tempC", Toast.LENGTH_SHORT).show()
+        if (tempC != 0.0 && tempF != 0.0){
+            onResult(Weather(tempC,tempF))
+        }
     }
 
     Scaffold {

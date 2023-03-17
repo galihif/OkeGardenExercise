@@ -11,7 +11,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.okegardenexercise.ui.screen.HomeScreen
 import com.example.okegardenexercise.ui.screen.ResultScreen
 import com.example.okegardenexercise.ui.theme.OkeGardenExerciseTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 @ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

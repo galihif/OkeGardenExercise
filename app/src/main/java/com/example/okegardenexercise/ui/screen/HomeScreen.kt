@@ -12,7 +12,9 @@ import com.example.okegardenexercise.ui.components.CityNameDropdown
 @ExperimentalMaterialApi
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    onSubmitClicked: () -> Unit
+) {
     val apiKey by remember {
         mutableStateOf("ff9f895b2e884d6680530135202710")
     }
@@ -43,8 +45,12 @@ fun HomeScreen() {
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp), onClick = { /*TODO*/ }) {
-                Text(text = "Submit", modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp))
+                    .padding(top = 16.dp), onClick = onSubmitClicked
+            ) {
+                Text(
+                    text = "Submit",
+                    modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)
+                )
             }
         }
     }

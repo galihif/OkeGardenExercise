@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.okegardenexercise.ui.screen.HomeScreen
+import com.example.okegardenexercise.ui.screen.ResultScreen
 import com.example.okegardenexercise.ui.theme.OkeGardenExerciseTheme
 
 @ExperimentalMaterialApi
@@ -34,7 +35,15 @@ fun MyApp() {
         startDestination = "Home"
     ){
         composable("Home"){
-            HomeScreen()
+            HomeScreen(
+                onSubmitClicked = {
+                    navController.navigate("Result")
+                }
+            )
         }
+        composable("Result"){
+            ResultScreen()
+        }
+
     }
 }

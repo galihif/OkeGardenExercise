@@ -23,8 +23,6 @@ class HomeViewModel
     private val _loading = MutableStateFlow(false)
     val loading = _loading
 
-    private val _success = MutableStateFlow(false)
-    val success = _success
 
 
     fun getWeatherData(key: String, cityName: String) {
@@ -34,9 +32,14 @@ class HomeViewModel
                 _tempCelcius.value = it.current.tempC.toDouble()
                 _tempFahrenheit.value = it.current.tempF
                 _loading.value = false
-                _success.value = true
             }
         }
+    }
+
+    fun setDefault(){
+        _tempCelcius.value = 0.0
+        _tempFahrenheit.value = 0.0
+        _loading.value = false
     }
 
     init {

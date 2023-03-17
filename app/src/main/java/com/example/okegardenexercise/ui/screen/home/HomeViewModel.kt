@@ -14,17 +14,27 @@ class HomeViewModel
     private val repo: MainRepository
 ) : ViewModel() {
 
-    private val _test = MutableStateFlow("")
-    val test = _test
-    private fun getTest(){
+    private val _tempCelcius = MutableStateFlow(0.0)
+    val tempCelcius = _tempCelcius
+
+    private val _tempFahrenheit = MutableStateFlow(0.0)
+    val tempFahrenheit = _tempFahrenheit
+
+    private val _loading = MutableStateFlow(false)
+    val loading = _loading
+
+    fun getWeatherData(key: String, cityName: String) {
+        _loading.value = true
         viewModelScope.launch {
-            repo.test.collect{
-                _test.value = it
+            repo.getWeather(key, cityName).collect {
+                _tempCelcius.value = it.current.tempC.toDouble()
+                _tempFahrenheit.value = it.current.tempF
+                _loading.value = false
             }
         }
     }
 
     init {
-        getTest()
+
     }
 }

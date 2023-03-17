@@ -7,5 +7,8 @@ import javax.inject.Inject
 class MainRepository @Inject constructor(
     private val api: ApiService
 ) {
-    val test = flowOf("test")
+    suspend fun getWeather(
+        key: String,
+        q: String,
+    ) = flowOf(api.getWeather(key, q))
 }

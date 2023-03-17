@@ -1,11 +1,13 @@
 package com.example.okegardenexercise.ui.screen
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.okegardenexercise.ui.components.CityNameDropdown
@@ -18,13 +20,24 @@ fun HomeScreen(
     onSubmitClicked: () -> Unit,
     viewModel:HomeViewModel = hiltViewModel()
 ) {
-    val test by viewModel.test.collectAsState()
+    val context = LocalContext.current
+
+    val tempC by viewModel.tempCelcius.collectAsState()
+    val tempF by viewModel.tempFahrenheit.collectAsState()
+
     val apiKey by remember {
         mutableStateOf("ff9f895b2e884d6680530135202710")
     }
     var selectedCity by remember {
         mutableStateOf("Kuala Lumpur")
     }
+
+    val loading by viewModel.loading.collectAsState()
+
+    LaunchedEffect(tempC){
+        Toast.makeText(context, "$tempC", Toast.LENGTH_SHORT).show()
+    }
+
     Scaffold {
         Column(
             modifier = Modifier
@@ -49,10 +62,13 @@ fun HomeScreen(
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp), onClick = onSubmitClicked
+                    .padding(top = 16.dp),
+                onClick = {
+                    viewModel.getWeatherData(apiKey,selectedCity)
+                }
             ) {
                 Text(
-                    text = test,
+                    text = if (loading) "Loading..." else "Submit",
                     modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)
                 )
             }

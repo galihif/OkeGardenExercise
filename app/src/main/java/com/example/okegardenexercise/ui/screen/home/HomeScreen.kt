@@ -23,7 +23,7 @@ fun HomeScreen(
     val tempC by viewModel.tempCelcius.collectAsState()
     val tempF by viewModel.tempFahrenheit.collectAsState()
 
-    val apiKey by remember {
+    var apiKey by remember {
         mutableStateOf("ff9f895b2e884d6680530135202710")
     }
     var selectedCity by remember {
@@ -50,7 +50,7 @@ fun HomeScreen(
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = apiKey,
-                onValueChange = {},
+                onValueChange = { apiKey = it },
                 label = { Text("Your API Key") }
             )
             CityNameDropdown(

@@ -1,6 +1,7 @@
 package com.example.okegardenexercise.data.remote.dto
 
 
+import com.example.okegardenexercise.data.model.Weather
 import com.google.gson.annotations.SerializedName
 
 data class WeatherDataDto(
@@ -33,5 +34,12 @@ data class WeatherDataDto(
         val region: String,
         @SerializedName("tz_id")
         val tzId: String
+    )
+}
+
+fun WeatherDataDto.toWeather(): Weather {
+    return Weather(
+        tempCelcius = current.tempC.toDouble(),
+        tempFahrenheit = current.tempF,
     )
 }

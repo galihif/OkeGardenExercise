@@ -3,6 +3,8 @@ package com.example.okegardenexercise.ui.screen.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.okegardenexercise.data.MainRepository
+import com.example.okegardenexercise.data.model.Weather
+import com.example.okegardenexercise.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -14,11 +16,9 @@ class HomeViewModel
     private val repo: MainRepository
 ) : ViewModel() {
 
-    private val _tempCelcius = MutableStateFlow(0.0)
-    val tempCelcius = _tempCelcius
 
-    private val _tempFahrenheit = MutableStateFlow(0.0)
-    val tempFahrenheit = _tempFahrenheit
+    private val _weather = MutableStateFlow<Resource<Weather>>(Resource.Loading())
+    val weather = _weather
 
     private val _loading = MutableStateFlow(false)
     val loading = _loading
@@ -29,16 +29,26 @@ class HomeViewModel
         _loading.value = true
         viewModelScope.launch {
             repo.getWeather(key, cityName).collect {
-                _tempCelcius.value = it.current.tempC.toDouble()
-                _tempFahrenheit.value = it.current.tempF
-                _loading.value = false
+                when (it) {
+                    is Resource.Success -> {
+                        _weather.value = it
+                        _loading.value = false
+                    }
+                    is Resource.Error -> {
+                        _weather.value = it
+                        _loading.value = false
+                    }
+                    is Resource.Loading -> {
+                        _weather.value = it
+                        _loading.value = true
+                    }
+                }
             }
         }
     }
 
-    fun setDefault(){
-        _tempCelcius.value = 0.0
-        _tempFahrenheit.value = 0.0
+    fun setDefaultWeather() {
+        _weather.value = Resource.Loading()
         _loading.value = false
     }
 

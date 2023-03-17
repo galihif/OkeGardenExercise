@@ -1,15 +1,18 @@
 package com.example.okegardenexercise.ui.screen.home
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.okegardenexercise.data.model.Weather
 import com.example.okegardenexercise.ui.components.CityNameDropdown
+import com.example.okegardenexercise.utils.Resource
 
 @ExperimentalMaterialApi
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -18,9 +21,9 @@ fun HomeScreen(
     onResult: (Weather) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
 
-    val tempC by viewModel.tempCelcius.collectAsState()
-    val tempF by viewModel.tempFahrenheit.collectAsState()
+    val weather by viewModel.weather.collectAsState()
 
     var apiKey by remember {
         mutableStateOf("ff9f895b2e884d6680530135202710")
@@ -31,10 +34,12 @@ fun HomeScreen(
 
     val loading by viewModel.loading.collectAsState()
 
-    LaunchedEffect(tempC) {
-        if (tempC != 0.0 && tempF != 0.0) {
-            onResult(Weather(tempC, tempF))
-            viewModel.setDefault()
+    LaunchedEffect(key1 = weather) {
+        if (weather is Resource.Success) {
+            onResult(weather.data!!)
+            viewModel.setDefaultWeather()
+        }else if (weather is Resource.Error){
+            Toast.makeText(context, weather.message, Toast.LENGTH_LONG).show()
         }
     }
 

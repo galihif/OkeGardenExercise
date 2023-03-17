@@ -1,4 +1,4 @@
-package com.example.okegardenexercise.ui.screen
+package com.example.okegardenexercise.ui.screen.home
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
@@ -10,7 +10,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.okegardenexercise.data.model.Weather
 import com.example.okegardenexercise.ui.components.CityNameDropdown
-import com.example.okegardenexercise.ui.screen.home.HomeViewModel
 
 @ExperimentalMaterialApi
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")

@@ -10,7 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.okegardenexercise.data.model.Weather
-import com.example.okegardenexercise.ui.screen.HomeScreen
+import com.example.okegardenexercise.ui.screen.home.HomeScreen
 import com.example.okegardenexercise.ui.screen.ResultScreen
 import com.example.okegardenexercise.ui.theme.OkeGardenExerciseTheme
 import dagger.hilt.android.AndroidEntryPoint

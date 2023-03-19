@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.okegardenexercise.data.model.Weather
 import com.example.okegardenexercise.ui.screen.home.HomeScreen
 import com.example.okegardenexercise.ui.screen.ResultScreen
+import com.example.okegardenexercise.ui.screen.detail_produk.DetailProdukScreen
 import com.example.okegardenexercise.ui.theme.OkeGardenExerciseTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,12 +45,22 @@ fun MyApp() {
                     navController.currentBackStackEntry?.savedStateHandle?.set("weather",it)
                     navController.navigate("Result/weather")
                     Log.d("GALIH", "MyApp: ${it.tempCelcius}")
+                },
+                onDetailProdukClicked = {
+                    navController.navigate("DetailProduk")
                 }
             )
         }
         composable("Result/weather"){
             val weather = navController.previousBackStackEntry?.savedStateHandle?.get<Weather>("weather")
             ResultScreen(weather = weather?: Weather(0.0,0.0))
+        }
+        composable("DetailProduk"){
+            DetailProdukScreen(
+                onBackClicked = {
+                    navController.popBackStack()
+                }
+            )
         }
 
     }

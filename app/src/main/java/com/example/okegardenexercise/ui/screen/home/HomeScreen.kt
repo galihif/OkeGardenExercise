@@ -19,6 +19,7 @@ import com.example.okegardenexercise.utils.Resource
 @Composable
 fun HomeScreen(
     onResult: (Weather) -> Unit,
+    onDetailProdukClicked: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -77,6 +78,18 @@ fun HomeScreen(
                     modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)
                 )
             }
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
+                onClick = onDetailProdukClicked
+            ) {
+                Text(
+                    text = "Detail Produk",
+                    modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)
+                )
+            }
+
         }
     }
 }
